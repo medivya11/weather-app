@@ -25,7 +25,7 @@ body {
     margin-bottom: 30px;
 }
 
-input {
+input[type="text"] {
     border: none;
     outline: none;
     padding: 10px 20px;
@@ -90,4 +90,76 @@ h3 {
 
 #error-msg {
     margin-top: 20px;
+}
+
+/* --- TOGGLE STYLES --- */
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Pushes the toggle to the right */
+    margin-bottom: 20px;
+}
+
+#unitLabel {
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* The actual switch box */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider bar */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+}
+
+/* The round knob */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+/* When checked (Fahrenheit is active) */
+input:checked + .slider {
+    background-color: #3498db;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }
