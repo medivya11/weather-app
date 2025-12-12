@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Weather App</title>
+    <title>Cute Weather App</title>
     <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
@@ -11,21 +11,23 @@
     <div class="card">
         <h2>Weather App</h2>
         
-        <div class="search">
-            <input type="text" id="cityInput" placeholder="Enter city name (e.g. London)">
-            <button onclick="getWeather()">Search</button>
-        </div>
+        <div class="search-container">
+            <div class="search-input-group">
+                <input type="text" id="cityInput" placeholder="Enter city name (e.g. London)">
+                <button onclick="getWeather()">Search</button>
+            </div>
 
-        <div class="toggle-container">
-            <label class="switch">
-                <input type="checkbox" id="tempToggle" onchange="toggleTemperature()" checked>
-                <span class="slider round"></span>
-            </label>
-            <span id="unitLabel">°C / °F</span>
+            <div class="unit-selection">
+                <input type="radio" id="unitC" name="tempUnit" value="celsius" checked>
+                <label for="unitC">°C</label>
+                
+                <input type="radio" id="unitF" name="tempUnit" value="fahrenheit">
+                <label for="unitF">°F</label>
+            </div>
         </div>
         <div class="weather" id="weatherResult" style="display: none;">
             <img src="" id="weather-icon"> 
-            <h1 id="temp">--°F</h1>
+            <h1 id="temp">--°C</h1>
             <h3 id="city">City Name</h3>
             
             <div class="details">
@@ -35,7 +37,7 @@
                 </div>
                 <div class="col">
                     <p>Wind Speed</p>
-                    <p id="wind">-- mph</p>
+                    <p id="wind">-- km/h</p>
                 </div>
             </div>
         </div>

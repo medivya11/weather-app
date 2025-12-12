@@ -7,13 +7,9 @@ const weatherIcon = document.getElementById("weather-icon");
 const GEO_API_URL = "https://geocoding-api.open-meteo.com/v1/search";
 const WEATHER_API_URL = "https://api.open-meteo.com/v1/forecast";
 
-// Global variable to track the current temperature unit
-// isCelsius is FALSE because the HTML checkbox is CHECKED (starting in Fahrenheit)
-let isCelsius = false; 
-
 
 // --- 3. Icon Mapping Function ---
-function getIcon(weatherCode, currentTemp) {
+function getIcon(weatherCode, currentTemp, isCelsius) {
     let iconPath = 'images/';
 
     // We use WMO codes to determine the weather type
@@ -35,6 +31,7 @@ function getIcon(weatherCode, currentTemp) {
     
     return iconPath;
 }
+
 
 // --- 4. Main Weather Fetching Function ---
 async function getWeather() {
@@ -64,7 +61,10 @@ async function getWeather() {
         const lon = geoData.results[0].longitude;
         const cityName = geoData.results[0].name;
 
-        // --- Step 2: Determine API Units based on Toggle State ---
+        // --- Step 2: Determine API Units based on Radio Button Selection ---
+        const selectedUnit = document.querySelector('input[name="tempUnit"]:checked').value;
+        const isCelsius = selectedUnit === 'celsius';
+        
         const tempUnitParam = isCelsius ? 'celsius' : 'fahrenheit';
         const windUnitParam = isCelsius ? 'kmh' : 'mph';
         
@@ -87,7 +87,9 @@ async function getWeather() {
         document.getElementById("humidity").innerText = "N/A"; // Placeholder 
 
         const weatherCode = current.weathercode;
-        weatherIcon.src = getIcon(weatherCode, currentTemp);
+        
+        // Pass the isCelsius state to the icon function for temperature-based image changes
+        weatherIcon.src = getIcon(weatherCode, currentTemp, isCelsius);
 
         // Show result
         resultContainer.style.display = "block";
@@ -96,19 +98,5 @@ async function getWeather() {
         console.error("Error fetching weather data:", error);
         errorMsg.innerText = "Error: Could not find weather for that city.";
         errorMsg.style.display = "block";
-    }
-}
-
-// --- 5. Toggle Function ---
-function toggleTemperature() {
-    // Check the toggle box state: if checked=true, it's Fahrenheit (isCelsius=false)
-    // if checked=false, it's Celsius (isCelsius=true)
-    isCelsius = !document.getElementById("tempToggle").checked; 
-    
-    const city = document.getElementById("cityInput").value.trim();
-
-    // If a city has already been searched, re-run the search to get the new unit data
-    if (city) {
-        getWeather(); 
     }
 }
